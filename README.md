@@ -1,93 +1,186 @@
-# FoodSmart Starter
+# FoodSmart Singapore 🍜
 
-A polished starter project for a **Food Recommendation Web App** inspired by the interaction model of ParkSmart's optimizer flow. The source site shows a single-page optimizer with destination, duration, priority modes, and tabs like Find / Parked / Tracker / Saved. This starter adapts that structure into a Singapore-focused food recommendation experience with filters for area, cuisine, budget, dietary preferences, and recommendation modes. citeturn698781view0
+FoodSmart is a web application that recommends licensed food establishments in Singapore. It allows users to search food places by name, postcode, category, and recommendation mode.
+The application uses Singapore government open data to provide searchable and ranked food establishments.
 
-## Stack
-- **Backend:** FastAPI
-- **Frontend:** React + Vite
-- **Data:** Seeded JSON dataset for quick prototyping
-- **Storage for saves/history:** browser localStorage
+---
 
-## Included features
-- Search by keyword, area, and cuisine
-- Budget and distance filters
-- Dietary preference chips
-- Recommendation modes:
-  - Cheapest
-  - Closest
-  - Balanced
-  - Best Value
-- Saved places tab
-- Visit tracker tab
-- Weighted recommendation scoring in Python
+# Features
 
-## Project structure
+* Search food establishments by name or location
+* Filter by category (Cafe, Bakery, Food Court, etc.)
+* Recommendation ranking system
+* Location-based distance filtering
+* Uses real Singapore licensed food establishment dataset
+* Clean web interface with recommendation cards
 
-```text
-foodsmart-starter/
-├── backend/
-│   ├── app/
-│   │   ├── data_loader.py
-│   │   ├── main.py
-│   │   └── recommender.py
-│   ├── data/
-│   │   └── restaurants.json
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ModeCard.jsx
-│   │   │   └── RestaurantCard.jsx
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── styles.css
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-└── README.md
+---
+
+# Dataset
+
+This project uses the **Licensed Eating Establishments dataset** from Singapore's open data portal.
+
+Source:
+[https://data.gov.sg](https://data.gov.sg)
+
+The dataset contains:
+
+* Business name
+* Licence name
+* Address
+* Postcode
+* Licence information
+* Geographic coordinates
+
+Total records: **34,000+ establishments**
+
+---
+
+# Tech Stack
+
+Backend
+
+* Python
+* FastAPI
+* GeoJSON dataset processing
+
+Frontend
+
+* React
+* Vite
+* CSS
+
+Other
+
+* Git
+* GitHub
+
+---
+
+# How Recommendations Work
+
+Each food establishment is assigned:
+
+* Estimated rating
+* Estimated price level
+* Category classification
+* Optional distance from user location
+
+A recommendation score is calculated using:
+
+```
+Score = rating × weight + price factor − distance penalty
 ```
 
-## Run locally
+Users can choose different modes:
 
-### 1) Backend
+* Balanced
+* Cheapest
+* Closest
+* Best Value
 
-```bash
+---
+
+# Running the Project
+
+## Backend
+
+Navigate to backend folder:
+
+```
 cd backend
-python -m venv .venv
-source .venv/bin/activate   # macOS/Linux
-# .venv\Scripts\activate   # Windows PowerShell
-pip install -r requirements.txt
+```
+
+Create virtual environment:
+
+```
+python -m venv venv
+```
+
+Activate environment:
+
+Windows:
+
+```
+venv\Scripts\activate
+```
+
+Install dependencies:
+
+```
+pip install fastapi uvicorn
+```
+
+Run server:
+
+```
 uvicorn app.main:app --reload
 ```
 
-Backend runs at `http://127.0.0.1:8000`
+Backend runs at:
 
-### 2) Frontend
+```
+http://127.0.0.1:8000
+```
 
-```bash
+---
+
+## Frontend
+
+Navigate to frontend folder:
+
+```
 cd frontend
+```
+
+Install dependencies:
+
+```
 npm install
+```
+
+Run development server:
+
+```
 npm run dev
 ```
 
-Frontend runs at `http://127.0.0.1:5173`
+Frontend runs at:
 
-## Next upgrades you can add
-1. Replace JSON with PostgreSQL or SQLite.
-2. Add user accounts and real persistence.
-3. Integrate Google Places, Yelp, or OneMap for live restaurant data.
-4. Add map view and travel time calculations.
-5. Add collaborative filtering or personalized ML recommendations.
-6. Add restaurant detail pages and review summaries.
+```
+http://localhost:5173
+```
 
-## Recommendation logic summary
-The backend computes a weighted score using:
-- rating
-- price level
-- distance
-- popularity
-- cuisine match
-- dietary match
-- open-now bonus
+---
 
-Each mode changes the scoring weights so the same data can produce different ranking behavior.
+# Example API Endpoint
+
+Example request:
+
+```
+GET /recommendations?q=ang mo kio&mode=balanced
+```
+
+Returns ranked food establishments matching the search query.
+
+---
+
+# Future Improvements
+
+* Map view for restaurant locations
+* Real Google ratings integration
+* Machine learning recommendation engine
+* User favourites and history
+* Mobile responsive design improvements
+
+---
+
+# Author
+
+Joel Roche
+
+---
+
+# License
+
+This project is for personal purposes.
